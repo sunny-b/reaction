@@ -24,12 +24,12 @@ const Board = (props) => {
       </header>
       <main>
         <div id="list-container" className="list-container">
-          <div id="existing-lists" className="existing-lists">
+          <div id="existing-lists" className="existing-lists container"  ref={props.onDrag}>
             {lists}
           </div>
           <CreateListTileContainer
             id={props.id}
-            position={props.lists.length + 1}
+            position={props.newPosition}
           />
         </div>
       </main>
