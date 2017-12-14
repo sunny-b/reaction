@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import CardTile from './CardTile';
+import CreateCardTileForm from './CreateCardTileForm';
+import AddCardButton from './AddCardButton';
 
 import * as actions from '../../actions/BoardActions';
 
 const List = (props) => {
-  const cardComponents = props.cards.map(card => <CardTile card={card} key={card.id} />);
+  const cardComponents = props.cards.map(card => <CardTile card={card} key={card.id} id={card.id} />);
   const renderTitle = () => {
     if (props.editing) {
       return (
@@ -23,6 +25,19 @@ const List = (props) => {
     }
   };
 
+  const renderForm = () => {
+    if (props.active) {
+      return (
+        <CreateCardTileForm
+          onCardChange={props.onCardChange}
+          newCardTitle={props.newCardTitle}
+          onAddCard={props.onAddCard}
+          onCloseForm={props.onCloseForm}
+        />
+      );
+    }
+  }
+
   return (
     <div className="list-background">
         <div className="list">
@@ -36,16 +51,15 @@ const List = (props) => {
               </div>
           </div>
 
-          <div id="cards-container" data-id={`list-${props.id}-cards`}>
+          <div id="cards-container" className='container' data-id={`${props.id}`}>
             {cardComponents}
           </div>
 
-          <div className="add-dropdown add-bottom">
-              <div className="card"><div className="card-info"></div><textarea name="add-card"></textarea><div className="members"></div></div>
-              <a className="button">Add</a><i className="x-icon icon"></i>
-              <div className="add-options"><span>...</span></div>
-          </div>
-          <div className="add-card-toggle" data-position="bottom">Add a card...</div>
+          {renderForm()}
+
+          <AddCardButton
+            onOpenForm={props.onOpenForm}
+          />
         </div>
     </div>
 

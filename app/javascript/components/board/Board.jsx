@@ -4,10 +4,17 @@ import PropTypes from 'prop-types';
 import ListContainer from './ListContainer';
 import CreateListTileContainer from './CreateListTileContainer';
 
-import * as actions from '../../actions/BoardActions';
-
 const Board = (props) => {
-  const lists = props.lists.map(list => <ListContainer list={list} key={list.id} />);
+  const lists = props.lists.map((list, idx) =>
+    <ListContainer
+      idx={idx}
+      list={list}
+      key={list.id}
+      active={props.activeList === list.id}
+      onOpenForm={props.onOpenForm}
+      onCloseForm={props.onCloseForm}
+    />
+  );
 
   return (
     <div>
@@ -29,7 +36,7 @@ const Board = (props) => {
           </div>
           <CreateListTileContainer
             id={props.id}
-            position={props.lists.length + 1}
+            position={props.newPosition}
           />
         </div>
       </main>
